@@ -49,7 +49,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "orange";
         ctx.fill();
         ctx.closePath();
       }
@@ -131,9 +131,9 @@ function collisionDetection() {
               ctx.rect(0, 0, canvas.width, canvas.height);
               ctx.fillStyle = 'mint';
               ctx.fill();
-              ctx.font = "16px Arial";
+              ctx.font = "16px monospace";
               ctx.fillStyle = "#FFFFFF";
-              ctx.fillText("Leveling UP", 200, 150);
+              ctx.fillText("Leveling UP", 210, 150);
               // ctx.closePath();
               setTimeout(function () {
                 paused = false;
@@ -147,23 +147,22 @@ function collisionDetection() {
   }
 }
 
-
 function drawScore() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "green";
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "red";
   ctx.fillText("Score: " + score, 8, 20);
 }
 
-function drawLives() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "green";
-  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+function drawLevel() {
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "red";
+  ctx.fillText("Level: " + level, 200, 20);
 }
 
-function drawLevel() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "green";
-  ctx.fillText("Level: " + level, 210, 20);
+function drawLives() {
+  ctx.font = "16px monospace";
+  ctx.fillStyle = "red";
+  ctx.fillText("Lives: " + lives, canvas.width - 75, 20);
 }
 
 function draw() {

@@ -5,12 +5,16 @@
 /* css reset */
 
 #myCanvas {
-  background: #eee;
+  background: white;
   display: block;
   margin: 0 auto;
   margin-top: 30px;
+  border-radius: 10px;
+  border: 5px solid;
+  border-color: black;
 }
 
 #theName{
   text-align : center;
+  font-family: monospace;
 }
