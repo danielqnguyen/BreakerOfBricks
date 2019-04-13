@@ -1,8 +1,8 @@
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
-var x = canvas.width / 2;
-var y = canvas.height - 30;
+var x = (canvas.width / 2) + Math.floor(Math.random() * 21) - 10;
+var y = (canvas.height - 30) + Math.floor(Math.random() * 21) - 10;
 var dx = 2;
 var dy = -2;
 var ballRadius = 10;
@@ -23,6 +23,7 @@ var score = 0;
 var lives = 3;
 var level = 1;
 var maxLevel = 5;
+var paused = false;
 
 var bricks = [];
 initBricks();
@@ -57,18 +58,17 @@ function drawBricks() {
 }
 
 function keyDownHandler(e) {
-  if (e.keyCode == 39) {
+  if (e.keyCode == 39 || e.keyCode == 68) {
     rightPressed = true;
-    console.log('hi')
-  } else if (e.keyCode == 37) {
+  } else if (e.keyCode == 37 || e.keyCode == 65) {
     leftPressed = true;
   }
 }
 
 function keyUpHandler(e) {
-  if (e.keyCode == 39) {
+  if (e.keyCode == 39 || e.keyCode == 68) {
     rightPressed = false;
-  } else if (e.keyCode == 37) {
+  } else if (e.keyCode == 37 || e.keyCode == 65) {
     leftPressed = false;
   }
 }
@@ -104,8 +104,41 @@ function collisionDetection() {
               document.location.reload();
             } else {
               level++;
+              brickRowCount++;
               initBricks();
               score = 0;
+              if (level == 1) {
+                dx = 3;
+                dy = -3;
+              } else if (level == 2) {
+                dx = 4;
+                dy = -4;
+              } else if (level == 3) {
+                dx = 5;
+                dy = -5;
+              } else if (level == 4) {
+                dx = 6;
+                dy = -6;
+              } else {
+                dx = 7;
+                dy = -7;
+              }
+              x = (canvas.width / 2) + Math.floor(Math.random() * 21) - 10;
+              y = (canvas.height - 30) + Math.floor(Math.random() * 21) - 10;
+              paddleX = (canvas.width - paddleWidth) / 2;
+              paused = true;
+              ctx.beginPath();
+              ctx.rect(0, 0, canvas.width, canvas.height);
+              ctx.fillStyle = 'mint';
+              ctx.fill();
+              ctx.font = "16px Arial";
+              ctx.fillStyle = "#FFFFFF";
+              ctx.fillText("Leveling UP", 200, 150);
+              // ctx.closePath();
+              setTimeout(function () {
+                paused = false;
+                draw();
+              }, 3000)
             }
           }
         }
@@ -155,9 +188,9 @@ function draw() {
         alert("Try Again Next Time!");
         document.location.reload();
       } else {
-        x = canvas.width / 2;
-        y = canvas.height - 30;
-        paddleX = (canva.width - paddleWidth) / 2;
+        x = (canvas.width / 2) + Math.floor(Math.random() * 21) - 10;
+        y = (canvas.height - 30) + Math.floor(Math.random() * 21) - 10;
+        paddleX = (canvas.width - paddleWidth) / 2;
       }
     }
   }
@@ -173,6 +206,9 @@ function draw() {
 
   x += dx;
   y += dy;
+  if (!paused) {
+    requestAnimationFrame(draw)
+  }
 }
 
 document.addEventListener("mousemove", mouseMoveHandler);
@@ -184,4 +220,4 @@ function mouseMoveHandler(e) {
   }
 }
 
-setInterval(draw, 10);
+draw();
